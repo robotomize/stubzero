@@ -1,2 +1,2 @@
-# fake-stubery
-The generation of object wrappers for quickly creating prototype objects
+# Fake-Stubery
+The generation of object wrappers for fast creation of prototype objects-models with fill data by type.
