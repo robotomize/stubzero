@@ -4,6 +4,7 @@ namespace stubzero;
 
 
 use InvalidArgumentException;
+use Minime\Annotations\AnnotationsBag;
 use Minime\Annotations\Cache\ArrayCache;
 use Minime\Annotations\Parser;
 use Minime\Annotations\Reader;
@@ -45,26 +46,25 @@ class Creator
     {
         $this->properties = (new ReflectionClass($this->className))->getDefaultProperties();
     }
-
-    private function contentAnnotation()
+    
+    private function generate()
     {
-        $reader = new Reader(new Parser, new ArrayCache);
-        foreach ($this->properties as $property => $theirValue) {
-            $this->parsedAnnotation[] = $reader->getPropertyAnnotations($this->className, $property);
+        $model = new $this->className();
+
+        foreach ($this->parsedAnnotation as $annotationBag) {
+            /** @var $annotationBag AnnotationsBag */
+            print $annotationBag->get('var');
         }
-    }
-
-    private function parseLightAnnotation()
-    {
-
     }
 
     public function start()
     {
         $this->getProperties();
 
-        $this->contentAnnotation();
-
+        $parser = new BaseTypeStubZeroParser(, , $parser)
+        
+        
+        $this->generate();
         var_dump($this->parsedAnnotation);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace test\data;
+use SimpleSoftwareIO\QrCode\DataTypes\Email;
 
 /**
  * Class User
@@ -26,7 +27,7 @@ class User
     private $email;
 
     /**
-     * @var string
+     * @var int
      */
     private $verify_num;
 
