@@ -76,18 +76,21 @@ class LexicalDispenser
 
     const FAKER_COUNTRY_CODE = 'countryCode';
 
+    /**
+     * @var array
+     */
     public static $fakerDispenserMap = [
-        'integer' => self::FAKER_NUMBER,
-        'int'       => self::FAKER_NUMBER,
-        'number' => self::FAKER_NUMBER,
-        'bool'  => self::FAKER_BOOLEAN,
-        'boolean' => self::FAKER_BOOLEAN,
-        'phone'     => self::FAKER_PHONE,
-        'tel'       => self::FAKER_PHONE,
-        'telphone'  => self::FAKER_PHONE,
-        'sms'       => self::FAKER_PHONE,
-        'verify_code' => self::FAKER_PHONE,
-        'address'      => self::FAKER_ADDRESS,
+        'integer'       => self::FAKER_NUMBER,
+        'int'           => self::FAKER_NUMBER,
+        'number'        => self::FAKER_NUMBER,
+        'bool'          => self::FAKER_BOOLEAN,
+        'boolean'       => self::FAKER_BOOLEAN,
+        'phone'         => self::FAKER_PHONE,
+        'tel'           => self::FAKER_PHONE,
+        'telphone'      => self::FAKER_PHONE,
+        'sms'           => self::FAKER_PHONE,
+        'verify_code'   => self::FAKER_PHONE,
+        'address'       => self::FAKER_ADDRESS,
         'email'         => self::FAKER_EMAIL,
         'mail'          => self::FAKER_EMAIL,
         'name'          => self::FAKER_NAME,
@@ -99,7 +102,13 @@ class LexicalDispenser
         'path'          => self::FAKER_PATH,
         'password'      => self::FAKER_PASSWORD,
         'username'      => self::FAKER_USERNAME,
-        'text'          => self::FAKER_TEXT
-
+        'text'          => self::FAKER_TEXT,
+        'id'            => self::FAKER_NUMBER,
+        'float'         => self::FAKER_FLOAT,
+        'guid'          => self::FAKER_UUID,
+        'uid'           => self::FAKER_UUID,
+        'userAgent'     => self::FAKER_USER_AGENT,
+        'date'          => self::FAKER_DATE_TIME,
+        
     ];
 }
