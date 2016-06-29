@@ -23,7 +23,6 @@ class ParserModel
     {
         if (preg_match('~^(set|get)([A-Z])(.*)$~', $name, $matches)) {
             $property = strtolower($matches[2]) . $matches[3];
-
             if (!property_exists($this, $property)) {
                 throw new ParserModelException('Property ' . $property . ' does not exists');
             }
@@ -39,7 +38,6 @@ class ParserModel
             }
         }
     }
-
 
     /**
      * @param $name
