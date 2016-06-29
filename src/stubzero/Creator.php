@@ -65,6 +65,7 @@ class Creator
 
         $parser->parse();
 
+        var_dump($parser->getParserModel());
 
         //$this->generate();
         //var_dump($this->parsedAnnotation);

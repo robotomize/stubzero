@@ -1,7 +1,6 @@
 <?php
 
 namespace stubzero;
-use stubzero\Exceptions\AnnotationTypeException;
 
 /**
  * Class AnnotationTypes
