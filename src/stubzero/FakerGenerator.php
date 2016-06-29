@@ -2,6 +2,8 @@
 
 namespace stubzero;
 
+use Faker;
+
 /**
  * Class FakerGenerator
  *
@@ -18,15 +20,20 @@ class FakerGenerator
     /**
      * FakerGenerator constructor.
      */
-    public function __construct(ParserModel $model, LexicalAnalyse $analyse)
+    public function __construct(ParserModel $model)
     {
         $this->parserModel = $model;
     }
 
     public function generate()
     {
+        $faker = Faker\Factory::create();
+        
         foreach (get_object_vars($this->parserModel) as $property => $value) {
-            print $property;
+            $fakeMethod = FactoryLexAnalyse::run($property);
+            if ($fakeMethod !== false) {
+                print $fakeMethod;
+            }
         }
     }
 }

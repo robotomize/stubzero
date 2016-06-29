@@ -64,7 +64,8 @@ class Creator
         $parser = new BaseTypeStubZeroParser($this->className, $this->properties, (new MinimeAnnotationParser()));
 
         $parser->parse();
-
+        $generator = (new FakerGenerator($parser->getParserModel()));
+        $generator->generate();
         var_dump($parser->getParserModel());
 
         //$this->generate();

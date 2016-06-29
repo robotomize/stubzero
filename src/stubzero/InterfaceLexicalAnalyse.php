@@ -11,11 +11,10 @@ namespace stubzero;
 interface InterfaceLexicalAnalyse
 {
     /**
-     * @param $lex
-     *
+     * @param array $tags
      * @return mixed
      */
-    public function setWord($lex);
+    public function setWord($word);
 
     /**
      * @return string
