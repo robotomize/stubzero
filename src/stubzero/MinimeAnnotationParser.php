@@ -12,7 +12,7 @@ use Minime\Annotations\Reader;
  * @package stubzero
  * @author robotomize@gmail.com
  */
-class MinimeAnnotationParser
+class MinimeAnnotationParser implements InterfaceAnnotateParser
 {
 
     /**

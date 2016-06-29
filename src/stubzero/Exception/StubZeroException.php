@@ -1,6 +1,6 @@
 <?php
 
-namespace stubzero\Exceptions;
+namespace stubzero\Exception;
 
 
 use Exception;

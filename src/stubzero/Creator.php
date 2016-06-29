@@ -61,10 +61,11 @@ class Creator
     {
         $this->getProperties();
 
-        $parser = new BaseTypeStubZeroParser(, , $parser)
+        $parser = new BaseTypeStubZeroParser($this->className, $this->properties, (new MinimeAnnotationParser()));
+
+        $parser->parse();
         
-        
-        $this->generate();
-        var_dump($this->parsedAnnotation);
+        //$this->generate();
+        //var_dump($this->parsedAnnotation);
     }
 }

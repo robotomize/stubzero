@@ -3,8 +3,8 @@
 
 namespace stubzero;
 
-use stubzero\Exceptions\AnnotationTypeException;
-use stubzero\Exceptions\ParserModelException;
+use stubzero\Exception\AnnotationTypeException;
+use stubzero\Exception\ParserModelException;
 
 /**
  * Class ParserModel
@@ -13,11 +13,6 @@ use stubzero\Exceptions\ParserModelException;
  */
 class ParserModel
 {
-    /**
-     * @var array
-     */
-    private $data = [];
-
     /**
      * @param $name
      * @param $arguments
@@ -55,17 +50,21 @@ class ParserModel
     public function __set($name, $value)
     {
         if (!is_array($value)) {
-            throw new ParserModelException(sprintf('The %s must be an array', $value));
+            throw new ParserModelException('Set the models value should be an array');
         }
 
-        $filtered = array_filter($value, function ($k) {
-            return AnnotationTypes::isTag($k);
-        });
+        $filtered = [];
 
-        if(!in_array($filtered[AnnotationTypes::VAR_TAG], AnnotationTypes::$map[AnnotationTypes::VAR_TAG])) {
+        foreach ($value as $k => $v) {
+            if (AnnotationTypes::isTag($k) === true) {
+                $filtered[$k] = $v;
+            }
+        }
+
+        if(!in_array($filtered[AnnotationTypes::VAR_TAG], AnnotationTypes::$map[AnnotationTypes::VAR_TAG], true)) {
             throw new AnnotationTypeException('Type annotation does not exist');
         }
-        
-        $this->data[$name] = $filtered;
+
+        $this->$name = $value;
     }
 }
