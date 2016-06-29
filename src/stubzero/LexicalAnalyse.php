@@ -19,6 +19,33 @@ class LexicalAnalyse implements InterfaceLexicalAnalyse
      */
     private $word;
 
+    public function analyse()
+    {
+        foreach (LexicalDispenser::$fakerLexicalDispenserMap as $token => $fakerMethod) {
+            if (self::search($token, $this->word) === true) {
+                $this->result = $fakerMethod;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param array $tags
+     */
+    public function setWord($word)
+    {
+        $this->word = $word;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getResult()
+    {
+        return $this->result;
+    }
+
     /**
      * @param $stringPattern
      *
@@ -64,29 +91,8 @@ class LexicalAnalyse implements InterfaceLexicalAnalyse
         return $result;
     }
 
-    public function analyse()
+    private function mostPowerful()
     {
-        foreach (LexicalDispenser::$fakerDispenserMap as $token => $fakerMethod) {
-            if (self::search($token, $this->word) === true) {
-                return $fakerMethod;
-            }
-        }
         return false;
-    }
-
-    /**
-     * @param array $tags
-     */
-    public function setWord($word)
-    {
-        $this->word = $word;
-    }
-
-    /**
-     * @return string
-     */
-    public function getResult()
-    {
-        return $this->result;
     }
 }

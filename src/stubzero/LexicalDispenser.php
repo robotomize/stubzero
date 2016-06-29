@@ -79,12 +79,21 @@ class LexicalDispenser
     /**
      * @var array
      */
-    public static $fakerDispenserMap = [
-        'integer'       => self::FAKER_NUMBER,
-        'int'           => self::FAKER_NUMBER,
+    public static $fakerTypesDispenserMap = [
+        AnnotationTypes::VAR_TYPE_INTEGER       => self::FAKER_NUMBER,
+        AnnotationTypes::VAR_TYPE_INT           => self::FAKER_NUMBER,
+        AnnotationTypes::VAR_TYPE_BOOL          => self::FAKER_BOOLEAN,
+        AnnotationTypes::VAR_TYPE_BOOLEAN       => self::FAKER_BOOLEAN,
+        AnnotationTypes::VAR_TYPE_STRING        => self::FAKER_WORD,
+        AnnotationTypes::VAR_TYPE_FLOAT         => self::FAKER_FLOAT,
+        AnnotationTypes::VAR_TYPE_ARRAY         => [],
+    ];
+
+    /**
+     * @var array
+     */
+    public static $fakerLexicalDispenserMap = [
         'number'        => self::FAKER_NUMBER,
-        'bool'          => self::FAKER_BOOLEAN,
-        'boolean'       => self::FAKER_BOOLEAN,
         'phone'         => self::FAKER_PHONE,
         'tel'           => self::FAKER_PHONE,
         'telphone'      => self::FAKER_PHONE,
@@ -95,8 +104,6 @@ class LexicalDispenser
         'mail'          => self::FAKER_EMAIL,
         'name'          => self::FAKER_NAME,
         'firstName'     => self::FAKER_FIRST_NAME,
-        'string'        => self::FAKER_WORD,
-        'array'         => [],
         'city'          => self::FAKER_CITY,
         'year'          => self::FAKER_YEAR,
         'path'          => self::FAKER_PATH,
@@ -104,7 +111,6 @@ class LexicalDispenser
         'username'      => self::FAKER_USERNAME,
         'text'          => self::FAKER_TEXT,
         'id'            => self::FAKER_NUMBER,
-        'float'         => self::FAKER_FLOAT,
         'guid'          => self::FAKER_UUID,
         'uid'           => self::FAKER_UUID,
         'userAgent'     => self::FAKER_USER_AGENT,
