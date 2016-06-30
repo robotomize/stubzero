@@ -2,13 +2,11 @@
 
 namespace stubzero;
 
-
 use InvalidArgumentException;
-use Minime\Annotations\AnnotationsBag;
-use Minime\Annotations\Cache\ArrayCache;
-use Minime\Annotations\Parser;
-use Minime\Annotations\Reader;
 use ReflectionClass;
+use stubzero\Models\InterfaceModel;
+use stubzero\Parsers\BaseTypeStubZeroParser;
+use stubzero\Parsers\MinimeAnnotationParser;
 
 /**
  * Class Creator
@@ -24,14 +22,14 @@ class Creator
     private $className;
 
     /**
-     * @var array
+     * @var
      */
-    private $properties = [];
+    private $foundModel;
 
     /**
      * @var array
      */
-    private $parsedAnnotation = [];
+    private $properties = [];
 
     public function __construct($className)
     {
@@ -40,21 +38,12 @@ class Creator
         }
 
         $this->className = $className;
+        $this->foundModel = new $this->className();
     }
 
     private function getProperties()
     {
         $this->properties = (new ReflectionClass($this->className))->getDefaultProperties();
-    }
-    
-    private function generate()
-    {
-        $model = new $this->className();
-
-        foreach ($this->parsedAnnotation as $annotationBag) {
-            /** @var $annotationBag AnnotationsBag */
-            print $annotationBag->get('var');
-        }
     }
 
     public function start()
@@ -64,11 +53,38 @@ class Creator
         $parser = new BaseTypeStubZeroParser($this->className, $this->properties, (new MinimeAnnotationParser()));
 
         $parser->parse();
-        $generator = (new FakerGenerator($parser->getParserModel()));
+        $generator = (new FakerGenerator($parser->getParserModel(), (new $this->className())));
         $generator->generate();
-        var_dump($parser->getParserModel());
 
-        //$this->generate();
-        //var_dump($this->parsedAnnotation);
+        $this->pullToResult($generator->getPrototypeModel());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFoundModel()
+    {
+        return $this->foundModel;
+    }
+
+    /**
+     * @param $property
+     *
+     * @return string
+     */
+    private function set($property)
+    {
+        return sprintf('set%s%s', mb_strtoupper($property{0}), mb_substr($property, 1));
+    }
+
+    /**
+     * @param InterfaceModel $model
+     */
+    private function pullToResult(InterfaceModel $model)
+    {
+        foreach (get_object_vars($model) as $property => $value) {
+            $methodName = $this->set($property);
+            $this->foundModel->$methodName($value);
+        }
     }
 }

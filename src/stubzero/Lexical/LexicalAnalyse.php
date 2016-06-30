@@ -1,10 +1,10 @@
 <?php
 
-namespace stubzero;
+namespace stubzero\Lexical;
 
 /**
  * Class LexicalAnalyse
- * @package stubzero
+ * @package stubzero\Lexical
  * @author robotomize@gmail.com
  */
 class LexicalAnalyse implements InterfaceLexicalAnalyse
@@ -19,6 +19,9 @@ class LexicalAnalyse implements InterfaceLexicalAnalyse
      */
     private $word;
 
+    /**
+     * @return null
+     */
     public function analyse()
     {
         foreach (LexicalDispenser::$fakerLexicalDispenserMap as $token => $fakerMethod) {
@@ -26,7 +29,6 @@ class LexicalAnalyse implements InterfaceLexicalAnalyse
                 $this->result = $fakerMethod;
             }
         }
-        return false;
     }
 
     /**
@@ -68,11 +70,12 @@ class LexicalAnalyse implements InterfaceLexicalAnalyse
     }
 
     /**
-     * @param array $r
+     * @param $r
      * @param $q
+     *
      * @return bool
      */
-    public static function search($r, $q)
+    private static function search($r, $q)
     {
         $result = false;
 

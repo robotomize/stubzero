@@ -1,11 +1,11 @@
 <?php
 
-namespace stubzero;
+namespace stubzero\Lexical;
 
 /**
  * Interface InterfaceLexical
  *
- * @package stubzero
+ * @package stubzero\Lexical
  * @author robotomize@gmail.com
  */
 interface InterfaceLexicalAnalyse

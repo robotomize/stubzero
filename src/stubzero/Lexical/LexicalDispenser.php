@@ -1,11 +1,11 @@
 <?php
 
-namespace stubzero;
+namespace stubzero\Lexical;
 
 /**
  * Class LexicalDispenser
  *
- * @package stubzero
+ * @package stubzero\Lexical
  * @author robotomize@gmail.com
  */
 class LexicalDispenser

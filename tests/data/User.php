@@ -1,7 +1,6 @@
 <?php
 
 namespace test\data;
-use SimpleSoftwareIO\QrCode\DataTypes\Email;
 
 /**
  * Class User
@@ -29,7 +28,7 @@ class User
     /**
      * @var int
      */
-    private $verify_num;
+    private $verifyNum;
 
     /**
      * @var string
@@ -39,7 +38,60 @@ class User
     /**
      * @var string
      */
-    private $update_status;
+    private $updateStatus;
+
+    /**
+     * @var array
+     */
+    private $places;
+
+    /**
+     * @return string
+     */
+    public function getUpdateStatus()
+    {
+        return $this->updateStatus;
+    }
+
+    /**
+     * @param string $updateStatus
+     */
+    public function setUpdateStatus($updateStatus)
+    {
+        $this->updateStatus = $updateStatus;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVerifyNum()
+    {
+        return $this->verifyNum;
+    }
+
+    /**
+     * @param int $verifyNum
+     */
+    public function setVerifyNum($verifyNum)
+    {
+        $this->verifyNum = $verifyNum;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPlaces()
+    {
+        return $this->places;
+    }
+
+    /**
+     * @param array $places
+     */
+    public function setPlaces($places)
+    {
+        $this->places = $places;
+    }
 
     /**
      * @return string
@@ -63,14 +115,6 @@ class User
     public function getEmail()
     {
         return $this->email;
-    }
-
-    /**
-     * @return int
-     */
-    public function getVerifyNum()
-    {
-        return $this->verify_num;
     }
 
     /**
@@ -106,34 +150,10 @@ class User
     }
 
     /**
-     * @param int $verify_num
-     */
-    public function setVerifyNum($verify_num)
-    {
-        $this->verify_num = $verify_num;
-    }
-
-    /**
      * @param int $status
      */
     public function setStatus($status)
     {
         $this->status = $status;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUpdateStatus()
-    {
-        return $this->update_status;
-    }
-
-    /**
-     * @param mixed $update_status
-     */
-    public function setUpdateStatus($update_status)
-    {
-        $this->update_status = $update_status;
     }
 }

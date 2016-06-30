@@ -1,11 +1,11 @@
 <?php
 
-namespace stubzero;
+namespace stubzero\Lexical;
 
 /**
  * Class AnnotationTypes
  *
- * @package stubzero
+ * @package stubzero\Lexical
  * @author robotomzie@gmail.com
  */
 class AnnotationTypes

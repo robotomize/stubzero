@@ -11,8 +11,16 @@ namespace stubzero;
  */
 class Generator
 {
-    public static function create()
+    /**
+     * @param $className
+     *
+     * @return mixed
+     */
+    public static function create($className)
     {
-        return false;
+        $creator = new Creator($className);
+        $creator->start();
+
+        return $creator->getFoundModel();
     }
 }

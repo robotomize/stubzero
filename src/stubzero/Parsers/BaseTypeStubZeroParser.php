@@ -1,10 +1,11 @@
 <?php
 
-namespace stubzero;
+namespace stubzero\Parsers;
+use stubzero\Models\ParserModel;
 
 /**
  * Class BaseTypeStubZeroParser
- * @package stubzero
+ * @package stubzero\Parsers
  * @author robotomize@gmail.com
  */
 class BaseTypeStubZeroParser implements InterfaceStubZeroParser
@@ -35,7 +36,7 @@ class BaseTypeStubZeroParser implements InterfaceStubZeroParser
      *
      * @param                                   $className
      * @param array                             $properties
-     * @param \stubzero\InterfaceAnnotateParser $parser
+     * @param InterfaceAnnotateParser $parser
      */
     public function __construct($className, array $properties, InterfaceAnnotateParser $parser)
     {

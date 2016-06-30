@@ -1,17 +1,19 @@
 <?php
 
 
-namespace stubzero;
+namespace stubzero\Models;
 
 use stubzero\Exception\AnnotationTypeException;
 use stubzero\Exception\ParserModelException;
+use stubzero\Lexical\AnnotationTypes;
 
 /**
  * Class ParserModel
- * @package stubzero
- * @author robotomize@sakh.com
+ *
+ * @package stubzero\Models
+ * @author robotomize@gmail.com
  */
-class ParserModel
+class ParserModel implements InterfaceModel
 {
     /**
      * @param $name

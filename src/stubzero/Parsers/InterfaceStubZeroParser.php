@@ -1,10 +1,10 @@
 <?php
 
-namespace stubzero;
+namespace stubzero\Parsers;
 
 /**
  * Class InterfaceStubZeroParser
- * @package stubzero
+ * @package stubzero\Parsers
  * @author robotomize@sakh.com
  */
 interface InterfaceStubZeroParser

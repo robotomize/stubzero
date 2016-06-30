@@ -1,6 +1,6 @@
 <?php
 
-namespace stubzero;
+namespace stubzero\Parsers;
 
 
 use Minime\Annotations\Cache\ArrayCache;
@@ -9,7 +9,7 @@ use Minime\Annotations\Reader;
 
 /**
  * Class MinimeAnnotationParser
- * @package stubzero
+ * @package stubzero\Parsers
  * @author robotomize@gmail.com
  */
 class MinimeAnnotationParser implements InterfaceAnnotateParser
