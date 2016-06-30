@@ -16,9 +16,19 @@ class Generator
      *
      * @return mixed
      */
-    public static function create($className)
+    public static function createByLexical($className)
     {
         $creator = new Creator($className);
+        $creator->setType(Creator::LEXICAL_TYPE);
+        $creator->start();
+
+        return $creator->getFoundModel();
+    }
+
+    public static function createByVarType($className)
+    {
+        $creator = new Creator($className);
+        $creator->setType(Creator::VAR_TYPE);
         $creator->start();
 
         return $creator->getFoundModel();
