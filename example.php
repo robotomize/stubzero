@@ -7,6 +7,9 @@ require __DIR__ . '/tests/data/User.php';
 require __DIR__ . '/src/autoload.php';
 require __DIR__ . '/vendor/autoload.php';
 
-$t = Generator::createDeep(User::class);
+$complexObjectBasedLexical = Generator::createDeep(User::class);
 
-var_dump($t);
+$simpleObjectBasedTypes = Generator::createQuick(User::class);
+
+var_dump($simpleObjectBasedTypes);
+var_dump($complexObjectBasedLexical);
