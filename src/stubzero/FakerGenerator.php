@@ -37,6 +37,7 @@ class FakerGenerator
 
     /**
      * FakerGenerator constructor.
+     * @param ParserModel $model
      */
     public function __construct(ParserModel $model)
     {
@@ -53,9 +54,9 @@ class FakerGenerator
         foreach (get_object_vars($this->parserModel) as $property => $value) {
             $fakeMethod = FactoryLexAnalyse::run($property);
             if ($fakeMethod !== null) {
-                $this->prototypeModel->$property = $this->fakerInstance->$fakeMethod();
+                $this->prototypeModel->{$property} = $this->fakerInstance->$fakeMethod();
             } else {
-                $this->prototypeModel->$property = $this->callFakerMethodByTypeBiding($value);
+                $this->prototypeModel->{$property} = $this->callFakerMethodByTypeBiding($value);
             }
         }
     }
