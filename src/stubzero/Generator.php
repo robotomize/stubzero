@@ -11,12 +11,13 @@ namespace stubzero;
  */
 class Generator
 {
+
     /**
      * @param $className
-     *
      * @return mixed
+     * @throws Exception\StubZeroException
      */
-    public static function createByLexical($className)
+    public static function createDeep($className)
     {
         $creator = new Creator($className);
         $creator->setType(Creator::LEXICAL_TYPE);
@@ -25,7 +26,12 @@ class Generator
         return $creator->getFoundModel();
     }
 
-    public static function createByVarType($className)
+    /**
+     * @param $className
+     * @return mixed
+     * @throws Exception\StubZeroException
+     */
+    public static function createQuick($className)
     {
         $creator = new Creator($className);
         $creator->setType(Creator::VAR_TYPE);

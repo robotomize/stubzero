@@ -7,6 +7,6 @@ require __DIR__ . '/tests/data/User.php';
 require __DIR__ . '/src/autoload.php';
 require __DIR__ . '/vendor/autoload.php';
 
-$t = Generator::create(User::class);
+$t = Generator::createDeep(User::class);
 
 var_dump($t);

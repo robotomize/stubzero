@@ -2,12 +2,17 @@
 
 namespace stubzero;
 
+use Camel\CaseTransformer;
 use InvalidArgumentException;
 use ReflectionClass;
+use ReflectionProperty;
+use stubzero\Exception\StubSetPropertyException;
 use stubzero\Exception\StubZeroException;
 use stubzero\Models\InterfaceModel;
 use stubzero\Parsers\BaseTypeStubZeroParser;
 use stubzero\Parsers\MinimeAnnotationParser;
+use Camel\Format\SnakeCase;
+use Camel\Format\CamelCase;
 
 /**
  * Class Creator
@@ -103,14 +108,78 @@ class Creator
 
     /**
      * @param $property
-     *
-     * @return string
+     * @return bool
+     */
+    private function isCamelCase($property)
+    {
+        $methodName = 'set' . ucfirst($property);
+        return $this->isMethodExist($methodName);
+    }
+
+    /**
+     * @param $method
+     * @return bool
+     */
+    private function isMethodExist($method)
+    {
+        $result = false;
+
+        if (method_exists($this->foundModel, $method)) {
+            $result = true;
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * @param $method
+     * @return bool
+     */
+    private function isUnderScore($property)
+    {
+        $transformer = new CaseTransformer(new SnakeCase(), new CamelCase());
+        $methodName = 'set' . ucfirst($transformer->transform($property));
+
+        return $this->isMethodExist($methodName);
+    }
+
+    /**
+     * @param $property
+     * @param $value
+     */
+    private function setCamelCaseFunc($property, $value)
+    {
+        $methodName = 'set' . ucfirst($property);
+        $this->foundModel->$methodName($value);
+    }
+
+    /**
+     * @param $property
+     * @param $value
+     */
+    private function setUnderScoreToCamelCaseFunc($property, $value)
+    {
+        $transformer = new CaseTransformer(new SnakeCase(), new CamelCase());
+        $methodName = 'set' . ucfirst($transformer->transform($property));
+
+        $this->foundModel->{$methodName}($value);
+    }
+
+    /**
+     * @param $property
+     * @param $value
      */
     private function set($property, $value)
     {
-        $methodName = 'set' . ucfirst($property);
-        method_exists($this->foundModel, $methodName)
-            ? $this->foundModel->$methodName($value) : $this->foundModel->{$property} = $value;
+
+        if ($this->isCamelCase($property) === true) {
+            $this->setCamelCaseFunc($property, $value);
+        } elseif ($this->isUnderScore($property) === true) {
+            $this->setUnderScoreToCamelCaseFunc($property, $value);
+        } else {
+            $this->foundModel->{$property} = $value;
+        }
     }
 
     /**

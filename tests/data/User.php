@@ -46,6 +46,27 @@ class User
     private $places;
 
     /**
+     * @var string
+     */
+    private $create_date;
+
+    /**
+     * @return string
+     */
+    public function getCreateDate()
+    {
+        return $this->create_date;
+    }
+
+    /**
+     * @param string $create_date
+     */
+    public function setCreateDate($create_date)
+    {
+        $this->create_date = $create_date;
+    }
+
+    /**
      * @return string
      */
     public function getUpdateStatus()
