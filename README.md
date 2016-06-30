@@ -3,11 +3,15 @@ The generation of object wrappers for fast creation of prototype objects-models 
 
 ### In progress
 
+### Requirements
+* fzaninotto/faker
+* minime/annotations:~2.0
 
 ### Usage 
 * For model classes only
 
-#### For example auto generate User model
+#### Create User model with faker data
+
 ```php
 $t = Generator::create(User::class);
 
