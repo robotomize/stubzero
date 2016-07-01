@@ -1,7 +1,7 @@
 <?php
 
 namespace stubzero\Parsers;
-use stubzero\Models\ParserModel;
+use stubzero\Models\Parser;
 
 /**
  * Class BaseTypeStubZeroParser
@@ -27,7 +27,7 @@ class BaseTypeStubZeroParser implements InterfaceStubZeroParser
     private $className;
 
     /**
-     * @var ParserModel
+     * @var Parser
      */
     private $parserModel;
 
@@ -50,7 +50,7 @@ class BaseTypeStubZeroParser implements InterfaceStubZeroParser
      */
     public function parse()
     {
-        $this->parserModel = new ParserModel();
+        $this->parserModel = new Parser();
 
         foreach ($this->properties as $property => $theirValue) {
             $this->parserModel->{$property} = $this->annotateParser
@@ -59,7 +59,7 @@ class BaseTypeStubZeroParser implements InterfaceStubZeroParser
     }
 
     /**
-     * @return ParserModel
+     * @return Parser
      */
     public function getParserModel()
     {

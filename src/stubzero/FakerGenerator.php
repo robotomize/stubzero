@@ -7,7 +7,7 @@ use Faker\Factory;
 use stubzero\Lexical\AnnotationTypes;
 use stubzero\Lexical\FactoryLexAnalyse;
 use stubzero\Lexical\LexicalDispenser;
-use stubzero\Models\ParserModel;
+use stubzero\Models\Parser;
 use stubzero\Models\PrototypeModel;
 
 /**
@@ -21,7 +21,7 @@ class FakerGenerator
     const ARRAY_DIMENSION = '10';
 
     /**
-     * @var ParserModel
+     * @var Parser
      */
     private $parserModel;
 
@@ -37,9 +37,10 @@ class FakerGenerator
 
     /**
      * FakerGenerator constructor.
-     * @param ParserModel $model
+     *
+*@param Parser $model
      */
-    public function __construct(ParserModel $model)
+    public function __construct(Parser $model)
     {
         $this->parserModel = $model;
         $this->fakerInstance = Factory::create();

@@ -11,7 +11,6 @@ namespace stubzero;
  */
 class Generator
 {
-
     /**
      * @param $className
      * @return mixed

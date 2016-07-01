@@ -13,7 +13,7 @@ use stubzero\Lexical\AnnotationTypes;
  * @package stubzero\Models
  * @author robotomize@gmail.com
  */
-class ParserModel implements InterfaceModel
+class Parser implements InterfaceModel
 {
     /**
      * @param $name
