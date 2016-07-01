@@ -14,8 +14,10 @@ require __DIR__ . '/vendor/autoload.php';
 //var_dump($simpleObjectBasedTypes);
 //var_dump($complexObjectBasedLexical);
 
-$crawl = new \stubzero\ClassCrawler('tests/data');
+//$crawl = new \stubzero\ClassCrawler('tests/data');
+//
+//$crawl->start();
+//
+//var_dump($crawl->getFiles());
 
-$crawl->start();
-
-var_dump($crawl->getFiles());
+Generator::code('tests/data');

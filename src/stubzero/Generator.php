@@ -11,10 +11,20 @@ namespace stubzero;
  */
 class Generator
 {
-    public function code($path)
+    public static function code($path)
     {
         $crawler = new ClassCrawler($path);
         $crawler->start();
+        $files = $crawler->getFiles();
+
+        foreach ($files as $filename) {
+            require_once $filename;
+            $t = explode(".",$filename);
+            $obj = strtolower($t[1]);
+            $class = ucfirst($t[1]);
+            ${$obj} = new $class();
+            var_dump(${$obj});
+        }
     }
 
     /**
