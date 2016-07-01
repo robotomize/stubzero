@@ -2,6 +2,8 @@
     "require": {
         "minime/annotations": "~2.0",
         "fzaninotto/faker": "^1.6",
-        "mattketmo/camel": "^1.1"
+        "mattketmo/camel": "^1.1",
+        "symfony/class-loader": "^3.1",
+        "nikic/php-parser": "^2.1"
     }
 }
