@@ -7,12 +7,12 @@ require __DIR__ . '/tests/data/User.php';
 require __DIR__ . '/src/autoload.php';
 require __DIR__ . '/vendor/autoload.php';
 
-//$complexObjectBasedLexical = Generator::createDeep(User::class);
+$complexObjectBasedLexical = Generator::generateSmart(User::class);
 //
 //$simpleObjectBasedTypes = Generator::createQuick(User::class);
 //
 //var_dump($simpleObjectBasedTypes);
-//var_dump($complexObjectBasedLexical);
+var_dump($complexObjectBasedLexical);
 
 //$crawl = new \stubzero\ClassCrawler('tests/data');
 //

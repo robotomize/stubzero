@@ -1,8 +1,10 @@
 <?php
 
-
 namespace stubzero;
 
+use PhpParser\NodeTraverser;
+use PhpParser\ParserFactory;
+use PhpParser\PrettyPrinter;
 /**
  * Class Generator
  *
@@ -17,13 +19,38 @@ class Generator
         $crawler->start();
         $files = $crawler->getFiles();
 
+        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+        $prettyPrinter = new PrettyPrinter\Standard;
+        $traverser     = new NodeTraverser;
+
         foreach ($files as $filename) {
             require_once $filename;
-            $t = explode(".",$filename);
-            $obj = strtolower($t[1]);
-            $class = ucfirst($t[1]);
-            ${$obj} = new $class();
-            var_dump(${$obj});
+
+            $code = file_get_contents($filename);
+
+            $stmts = $parser->parse($code);
+
+            $ns = $stmts[0]->{'name'};
+
+            $className = $stmts[0]->{'stmts'}[0]->{'name'};
+
+            $className = $ns . '\\' . $className;
+            $obj = new $className();
+            var_dump($obj);
+            //$stmts->
+            //var_dump($stmts);
+
+            // pretty print
+            //$code = $prettyPrinter->prettyPrintFile($stmts);
+
+            //echo $code;
+
+//
+//            $t = explode(".",$filename);
+//            $obj = strtolower($t[1]);
+//            $class = ucfirst($t[1]);
+//            ${$obj} = new $class();
+//            var_dump(${$obj});
         }
     }
 

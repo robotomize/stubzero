@@ -5,8 +5,7 @@ namespace stubzero;
 use Camel\CaseTransformer;
 use InvalidArgumentException;
 use ReflectionClass;
-use ReflectionProperty;
-use stubzero\Exception\StubSetPropertyException;
+use stubzero\EventEmitter\InterfaceSubject;
 use stubzero\Exception\StubZeroException;
 use stubzero\Models\InterfaceModel;
 use stubzero\Parsers\BaseTypeStubZeroParser;
@@ -20,7 +19,7 @@ use Camel\Format\CamelCase;
  * @package stubzero
  * @author robotomize@gmail.com
  */
-class Creator
+class Creator implements InterfaceSubject
 {
     const LEXICAL_TYPE = 'mixed';
 
@@ -40,6 +39,11 @@ class Creator
      * @var array
      */
     private $properties = [];
+
+    /**
+     * @var array
+     */
+    private $observers = [];
 
     /**
      * @var string
@@ -99,6 +103,47 @@ class Creator
     }
 
     /**
+     * @param $observer
+     */
+    public function attach($observer)
+    {
+        $this->observers[] = $observer;
+    }
+
+    /**
+     * @param $observer
+     */
+    public function detach($observer)
+    {
+        $key = array_search($observer, $this->observers, true);
+
+        if ($key) {
+            unset($this->observers[$key]);
+        }
+    }
+
+    /**
+     * @param null $args
+     */
+    public function notify($args = null)
+    {
+        foreach ($this->observers as $value) {
+            $value->update($args);
+        }
+    }
+
+    /**
+     * @param $property
+     * @return mixed
+     */
+    public function get($property)
+    {
+        $methodName = 'get' . ucfirst($property);
+        return method_exists($this->foundModel, $methodName)
+            ? $this->foundModel->$methodName() : $this->foundModel->{$property};
+    }
+
+    /**
      * @return mixed
      */
     public function getFoundModel()
@@ -131,7 +176,6 @@ class Creator
         return $result;
     }
 
-
     /**
      * @param $method
      * @return bool
@@ -148,22 +192,20 @@ class Creator
      * @param $property
      * @param $value
      */
-    private function setCamelCaseFunc($property, $value)
+    private function setCamelCaseFunc($property)
     {
         $methodName = 'set' . ucfirst($property);
-        $this->foundModel->$methodName($value);
+        return $methodName;
     }
 
     /**
      * @param $property
      * @param $value
      */
-    private function setUnderScoreToCamelCaseFunc($property, $value)
+    private function setUnderScoreToCamelCaseFunc($property)
     {
         $transformer = new CaseTransformer(new SnakeCase(), new CamelCase());
-        $methodName = 'set' . ucfirst($transformer->transform($property));
-
-        $this->foundModel->{$methodName}($value);
+        return 'set' . ucfirst($transformer->transform($property));
     }
 
     /**
@@ -172,25 +214,20 @@ class Creator
      */
     private function set($property, $value)
     {
-
         if ($this->isCamelCase($property) === true) {
-            $this->setCamelCaseFunc($property, $value);
+            $this->foundModel->{$this->setCamelCaseFunc($property)}($value);
+
+            $this->notify('$this->setCamelCaseFunc("' . $value . '")');
+            //$this->setCamelCaseFunc($property, $value);
+            //$object  = new \ReflectionMethod($this->foundModel, 'set' . ucfirst($property));
+            //var_dump($object);
         } elseif ($this->isUnderScore($property) === true) {
-            $this->setUnderScoreToCamelCaseFunc($property, $value);
+            $this->foundModel->{$this->setUnderScoreToCamelCaseFunc($property)}($value);
+            $this->notify('$this->setUnderScoreToCamelCaseFunc("' . $value . '")');
         } else {
             $this->foundModel->{$property} = $value;
+            $this->notify('$this->setUnderScoreToCamelCaseFunc("' . $value . '")');
         }
-    }
-
-    /**
-     * @param $property
-     * @return mixed
-     */
-    public function get($property)
-    {
-        $methodName = 'get' . ucfirst($property);
-        return method_exists($this->foundModel, $methodName)
-            ? $this->foundModel->$methodName() : $this->foundModel->{$property};
     }
 
     /**
