@@ -32,7 +32,7 @@ class LexicalAnalyse implements InterfaceLexicalAnalyse
     }
 
     /**
-     * @param array $tags
+     * @param $word
      */
     public function setWord($word)
     {
@@ -92,10 +92,5 @@ class LexicalAnalyse implements InterfaceLexicalAnalyse
         }
 
         return $result;
-    }
-
-    private function mostPowerful()
-    {
-        return false;
     }
 }

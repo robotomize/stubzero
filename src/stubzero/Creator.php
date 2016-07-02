@@ -210,25 +210,53 @@ class Creator implements InterfaceSubject
     }
 
     /**
+     * @param $value
+     * @param $property
+     * @param null $methodName
+     */
+    private function createMethodNameNotification($value, $property, $methodName = null)
+    {
+        if ($methodName === null) {
+            if (is_int($value)) {
+                $resultString = sprintf('%s = %s;', $property, $value);
+            } else {
+                $resultString = sprintf('%s = \'%s\';', $property, $value);
+            }
+        } elseif (is_array($value)) {
+            $toString = '[';
+            $values = "'" . implode("','", $value) . "'";
+            $toString .= $values . '];';
+            $resultString = sprintf('%s(\'%s\');', $methodName, $toString);
+        } else {
+            if (is_int($value)) {
+                $resultString = sprintf('%s(%s);', $methodName, $value);
+            } else {
+                $resultString = sprintf('%s(\'%s\');', $methodName, $value);
+            }
+        }
+
+        $this->notify($resultString);
+    }
+
+    /**
      * @param $property
      * @param $value
      */
     private function set($property, $value)
     {
+        $methodName = null;
+
         if ($this->isCamelCase($property) === true) {
             $this->foundModel->{$this->setCamelCaseFunc($property)}($value);
             $methodName = $this->setCamelCaseFunc($property);
-
-            $this->notify($methodName . '("' . $value . '")');
         } elseif ($this->isUnderScore($property) === true) {
             $this->foundModel->{$this->setUnderScoreToCamelCaseFunc($property)}($value);
             $methodName = $this->setUnderScoreToCamelCaseFunc($property);
-
-            $this->notify($methodName . '("' . $value . '")');
         } else {
             $this->foundModel->{$property} = $value;
-            $this->notify(sprintf('%s = %s', $property, $value));
         }
+
+        $this->createMethodNameNotification($value, $property, $methodName);
     }
 
     /**

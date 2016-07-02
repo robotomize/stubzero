@@ -2,10 +2,9 @@
 
 namespace stubzero;
 
-use PhpParser\NodeTraverser;
-use PhpParser\ParserFactory;
 use PhpParser\PrettyPrinter;
 use stubzero\CodeGenerator\Manager;
+use stubzero\Exception\StubZeroException;
 
 /**
  * Class Generator
@@ -17,14 +16,9 @@ class Generator
 {
     public static function code($path, $type = Manager::GENERATE_BY_LEXICAL)
     {
-        $crawler = new ClassCrawler($path);
-        $crawler->start();
-        $files = $crawler->getFiles();
-        
-        
-        //require_once __DIR__ . '/../autoload.php';
-
-
+        $manager = new Manager($path, $type);
+        $manager->run();
+        print $manager;
     }
 
     /**
@@ -50,7 +44,7 @@ class Generator
     /**
      * @param $className
      * @return mixed
-     * @throws Exception\StubZeroException
+     * @throws StubZeroException
      */
     public static function generateSmart($className)
     {
@@ -64,7 +58,7 @@ class Generator
     /**
      * @param $className
      * @return mixed
-     * @throws Exception\StubZeroException
+     * @throws StubZeroException
      */
     public static function generateQuick($className)
     {
