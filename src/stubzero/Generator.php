@@ -18,10 +18,9 @@ class Generator
         $crawler = new ClassCrawler($path);
         $crawler->start();
         $files = $crawler->getFiles();
+        require_once __DIR__ . '/../autoload.php';
 
         $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
-        $prettyPrinter = new PrettyPrinter\Standard;
-        $traverser     = new NodeTraverser;
 
         foreach ($files as $filename) {
             require_once $filename;
@@ -36,21 +35,6 @@ class Generator
 
             $className = $ns . '\\' . $className;
             $obj = new $className();
-            var_dump($obj);
-            //$stmts->
-            //var_dump($stmts);
-
-            // pretty print
-            //$code = $prettyPrinter->prettyPrintFile($stmts);
-
-            //echo $code;
-
-//
-//            $t = explode(".",$filename);
-//            $obj = strtolower($t[1]);
-//            $class = ucfirst($t[1]);
-//            ${$obj} = new $class();
-//            var_dump(${$obj});
         }
     }
 
