@@ -5,6 +5,7 @@ namespace stubzero;
 use Camel\CaseTransformer;
 use InvalidArgumentException;
 use ReflectionClass;
+use stubzero\EventEmitter\InterfaceObserver;
 use stubzero\EventEmitter\InterfaceSubject;
 use stubzero\Exception\StubZeroException;
 use stubzero\Models\InterfaceModel;
@@ -105,7 +106,7 @@ class Creator implements InterfaceSubject
     /**
      * @param $observer
      */
-    public function attach($observer)
+    public function attach(InterfaceObserver $observer)
     {
         $this->observers[] = $observer;
     }
@@ -113,7 +114,7 @@ class Creator implements InterfaceSubject
     /**
      * @param $observer
      */
-    public function detach($observer)
+    public function detach(InterfaceObserver $observer)
     {
         $key = array_search($observer, $this->observers, true);
 
@@ -216,17 +217,17 @@ class Creator implements InterfaceSubject
     {
         if ($this->isCamelCase($property) === true) {
             $this->foundModel->{$this->setCamelCaseFunc($property)}($value);
+            $methodName = $this->setCamelCaseFunc($property);
 
-            $this->notify('$this->setCamelCaseFunc("' . $value . '")');
-            //$this->setCamelCaseFunc($property, $value);
-            //$object  = new \ReflectionMethod($this->foundModel, 'set' . ucfirst($property));
-            //var_dump($object);
+            $this->notify($methodName . '("' . $value . '")');
         } elseif ($this->isUnderScore($property) === true) {
             $this->foundModel->{$this->setUnderScoreToCamelCaseFunc($property)}($value);
-            $this->notify('$this->setUnderScoreToCamelCaseFunc("' . $value . '")');
+            $methodName = $this->setUnderScoreToCamelCaseFunc($property);
+
+            $this->notify($methodName . '("' . $value . '")');
         } else {
             $this->foundModel->{$property} = $value;
-            $this->notify('$this->setUnderScoreToCamelCaseFunc("' . $value . '")');
+            $this->notify(sprintf('%s = %s', $property, $value));
         }
     }
 

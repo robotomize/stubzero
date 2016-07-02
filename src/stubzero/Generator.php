@@ -18,24 +18,11 @@ class Generator
         $crawler = new ClassCrawler($path);
         $crawler->start();
         $files = $crawler->getFiles();
-        require_once __DIR__ . '/../autoload.php';
+        
+        
+        //require_once __DIR__ . '/../autoload.php';
 
-        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
 
-        foreach ($files as $filename) {
-            require_once $filename;
-
-            $code = file_get_contents($filename);
-
-            $stmts = $parser->parse($code);
-
-            $ns = $stmts[0]->{'name'};
-
-            $className = $stmts[0]->{'stmts'}[0]->{'name'};
-
-            $className = $ns . '\\' . $className;
-            $obj = new $className();
-        }
     }
 
     /**

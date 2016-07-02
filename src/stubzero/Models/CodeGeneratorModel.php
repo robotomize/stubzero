@@ -7,13 +7,14 @@
  */
 
 namespace stubzero\Models;
+use stubzero\EventEmitter\InterfaceObserver;
 
 /**
  * Class CodeGeneratorModel
  * @package stubzero\Models
  * @author robotomize@gmail.com
  */
-class CodeGeneratorModel implements InterfaceModel
+class CodeGeneratorModel implements InterfaceModel, InterfaceObserver
 {
     /**
      * @var
@@ -24,6 +25,26 @@ class CodeGeneratorModel implements InterfaceModel
      * @var array
      */
     private $data = [];
+
+    /**
+     * @param null $args
+     */
+    public function update($args = null)
+    {
+        $this->data[] = $args;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        $dump = '';
+        foreach ($this->data as $key => $value) {
+            $dump .= $value . PHP_EOL;
+        }
+        return $dump;
+    }
 
     /**
      * @return mixed
