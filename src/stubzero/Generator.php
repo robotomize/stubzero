@@ -5,6 +5,8 @@ namespace stubzero;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
 use PhpParser\PrettyPrinter;
+use stubzero\CodeGenerator\Manager;
+
 /**
  * Class Generator
  *
@@ -13,7 +15,7 @@ use PhpParser\PrettyPrinter;
  */
 class Generator
 {
-    public static function code($path)
+    public static function code($path, $type = Manager::GENERATE_BY_LEXICAL)
     {
         $crawler = new ClassCrawler($path);
         $crawler->start();
