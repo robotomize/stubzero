@@ -7,7 +7,7 @@ require __DIR__ . '/tests/data/User.php';
 require __DIR__ . '/src/autoload.php';
 require __DIR__ . '/vendor/autoload.php';
 
-//$complexObjectBasedLexical = Generator::createDeep(User::class);
+//$complexObjectBasedLexical = Generator::generateSmart(User::class);
 //
 //$simpleObjectBasedTypes = Generator::createQuick(User::class);
 //
@@ -19,5 +19,5 @@ require __DIR__ . '/vendor/autoload.php';
 //$crawl->start();
 //
 //var_dump($crawl->getFiles());
-
+// /web/tickets/lib/Tickets/Models
 Generator::code('tests/data');

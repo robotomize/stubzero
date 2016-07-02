@@ -11,6 +11,11 @@ namespace test\data;
 class User
 {
     /**
+     * @var int
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $name;
@@ -49,6 +54,22 @@ class User
      * @var string
      */
     private $create_date;
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     /**
      * @return string

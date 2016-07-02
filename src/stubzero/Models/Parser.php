@@ -65,6 +65,6 @@ class Parser implements InterfaceModel
             throw new AnnotationTypeException('Type annotation does not exist');
         }
 
-        $this->$name = $value;
+        $this->{$name} = $value;
     }
 }

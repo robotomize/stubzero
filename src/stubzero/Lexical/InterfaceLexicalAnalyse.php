@@ -11,8 +11,7 @@ namespace stubzero\Lexical;
 interface InterfaceLexicalAnalyse
 {
     /**
-     * @param array $tags
-     * @return mixed
+     * @param $word
      */
     public function setWord($word);
 

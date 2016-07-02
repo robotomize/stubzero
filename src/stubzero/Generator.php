@@ -1,7 +1,10 @@
 <?php
 
-
 namespace stubzero;
+
+use PhpParser\PrettyPrinter;
+use stubzero\CodeGenerator\Manager;
+use stubzero\Exception\StubZeroException;
 
 /**
  * Class Generator
@@ -11,20 +14,11 @@ namespace stubzero;
  */
 class Generator
 {
-    public static function code($path)
+    public static function code($path, $type = Manager::GENERATE_BY_LEXICAL)
     {
-        $crawler = new ClassCrawler($path);
-        $crawler->start();
-        $files = $crawler->getFiles();
-
-        foreach ($files as $filename) {
-            require_once $filename;
-            $t = explode(".",$filename);
-            $obj = strtolower($t[1]);
-            $class = ucfirst($t[1]);
-            ${$obj} = new $class();
-            var_dump(${$obj});
-        }
+        $manager = new Manager($path, $type);
+        $manager->run();
+        print $manager;
     }
 
     /**
@@ -50,7 +44,7 @@ class Generator
     /**
      * @param $className
      * @return mixed
-     * @throws Exception\StubZeroException
+     * @throws StubZeroException
      */
     public static function generateSmart($className)
     {
@@ -64,7 +58,7 @@ class Generator
     /**
      * @param $className
      * @return mixed
-     * @throws Exception\StubZeroException
+     * @throws StubZeroException
      */
     public static function generateQuick($className)
     {

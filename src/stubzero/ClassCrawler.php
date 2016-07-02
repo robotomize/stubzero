@@ -51,9 +51,10 @@ class ClassCrawler
     {
         foreach (scandir($this->path) as $key => $className) {
             $fileName = $this->path . DIRECTORY_SEPARATOR . $className;
-
-            if (file_exists($fileName) && $className !== '.' && $className !== '..') {
-                $this->grabbedClasses[] = $fileName;
+            if (is_file($fileName)) {
+                if (file_exists($fileName) && $className !== '.' && $className !== '..') {
+                    $this->grabbedClasses[] = $fileName;
+                }
             }
         }
     }
