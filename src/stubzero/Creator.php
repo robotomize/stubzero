@@ -5,12 +5,12 @@ namespace stubzero;
 use Camel\CaseTransformer;
 use InvalidArgumentException;
 use ReflectionClass;
-use stubzero\EventEmitter\InterfaceObserver;
-use stubzero\EventEmitter\InterfaceSubject;
+use stubzero\Observable\InterfaceObserver;
+use stubzero\Observable\InterfaceSubject;
 use stubzero\Exception\StubZeroException;
 use stubzero\Models\InterfaceModel;
-use stubzero\Parsers\Types;
-use stubzero\Parsers\Minime;
+use stubzero\AnnotationParsers\AnnotationTypes;
+use stubzero\AnnotationParsers\Minime;
 use Camel\Format\SnakeCase;
 use Camel\Format\CamelCase;
 
@@ -79,6 +79,7 @@ class Creator implements InterfaceSubject
     }
 
     /**
+     * @throws StubZeroException
      * @param string $type
      */
     public function setType($type)
@@ -94,7 +95,7 @@ class Creator implements InterfaceSubject
     {
         $this->getProperties();
 
-        $parser = new Types($this->className, $this->properties, (new Minime()));
+        $parser = new AnnotationTypes($this->className, $this->properties, (new Minime()));
 
         $parser->parse();
         $generator = (new FakerGenerator($parser->getParserModel(), (new $this->className())));
@@ -104,7 +105,7 @@ class Creator implements InterfaceSubject
     }
 
     /**
-     * @param $observer
+     * @param InterfaceObserver $observer
      */
     public function attach(InterfaceObserver $observer)
     {
@@ -112,7 +113,7 @@ class Creator implements InterfaceSubject
     }
 
     /**
-     * @param $observer
+     * @param InterfaceObserver $observer
      */
     public function detach(InterfaceObserver $observer)
     {
@@ -178,7 +179,7 @@ class Creator implements InterfaceSubject
     }
 
     /**
-     * @param $method
+     * @param $property
      * @return bool
      */
     private function isUnderScore($property)
@@ -191,7 +192,7 @@ class Creator implements InterfaceSubject
 
     /**
      * @param $property
-     * @param $value
+     * @return string
      */
     private function setCamelCaseFunc($property)
     {
@@ -201,7 +202,7 @@ class Creator implements InterfaceSubject
 
     /**
      * @param $property
-     * @param $value
+     * @return string
      */
     private function setUnderScoreToCamelCaseFunc($property)
     {
@@ -219,6 +220,11 @@ class Creator implements InterfaceSubject
         if ($methodName === null) {
             if (is_int($value)) {
                 $resultString = sprintf('%s = %s;', $property, $value);
+            } elseif (is_array($value)) {
+                $toString = '[';
+                $values = "'" . implode("','", $value) . "'";
+                $toString .= $values . '];';
+                $resultString = sprintf('%s = \'%s\';', $property, $toString);
             } else {
                 $resultString = sprintf('%s = \'%s\';', $property, $value);
             }
@@ -230,6 +236,8 @@ class Creator implements InterfaceSubject
         } else {
             if (is_int($value)) {
                 $resultString = sprintf('%s(%s);', $methodName, $value);
+            } elseif ($value instanceof \DateTime) {
+                $resultString = sprintf('%s(\'%s\');', $methodName, $value->format('Y-m-d H:i'));
             } else {
                 $resultString = sprintf('%s(\'%s\');', $methodName, $value);
             }

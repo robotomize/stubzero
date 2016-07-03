@@ -3,7 +3,6 @@
 namespace stubzero;
 use InvalidArgumentException;
 use stubzero\Exception\StubZeroException;
-use stubzero\Models\ClassProperty;
 
 /**
  * Class ClassCrawler

@@ -16,6 +16,16 @@ use stubzero\Lexical\AnnotationTypes;
 class Parser implements InterfaceModel
 {
     /**
+     * @param $string
+     * @return mixed
+     */
+    private function filter($string)
+    {
+        $getType = explode(' ', $string);
+        return $getType[0];
+    }
+
+    /**
      * @param $name
      * @param $arguments
      * @return mixed
@@ -57,11 +67,14 @@ class Parser implements InterfaceModel
 
         foreach ($value as $k => $v) {
             if (AnnotationTypes::isTag($k) === true) {
-                $filtered[$k] = $v;
+                $filtered[$k] = $this->filter($v);
             }
         }
 
+
+
         if(!in_array($filtered[AnnotationTypes::VAR_TAG], AnnotationTypes::$map[AnnotationTypes::VAR_TAG], true)) {
+            print $filtered[AnnotationTypes::VAR_TAG];
             throw new AnnotationTypeException('Type annotation does not exist');
         }
 

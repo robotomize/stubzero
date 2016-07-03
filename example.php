@@ -14,10 +14,4 @@ require __DIR__ . '/vendor/autoload.php';
 //var_dump($simpleObjectBasedTypes);
 //var_dump($complexObjectBasedLexical);
 
-//$crawl = new \stubzero\ClassCrawler('tests/data');
-//
-//$crawl->start();
-//
-//var_dump($crawl->getFiles());
-//
-Generator::code('/web/tickets/lib/Tickets/Models');
+Generator::code('tests/data');
