@@ -19,5 +19,5 @@ require __DIR__ . '/vendor/autoload.php';
 //$crawl->start();
 //
 //var_dump($crawl->getFiles());
-// /web/tickets/lib/Tickets/Models
-Generator::code('tests/data');
+//
+Generator::code('/web/tickets/lib/Tickets/Models');

@@ -9,8 +9,8 @@ use stubzero\EventEmitter\InterfaceObserver;
 use stubzero\EventEmitter\InterfaceSubject;
 use stubzero\Exception\StubZeroException;
 use stubzero\Models\InterfaceModel;
-use stubzero\Parsers\BaseTypeStubZeroParser;
-use stubzero\Parsers\MinimeAnnotationParser;
+use stubzero\Parsers\Types;
+use stubzero\Parsers\Minime;
 use Camel\Format\SnakeCase;
 use Camel\Format\CamelCase;
 
@@ -94,7 +94,7 @@ class Creator implements InterfaceSubject
     {
         $this->getProperties();
 
-        $parser = new BaseTypeStubZeroParser($this->className, $this->properties, (new MinimeAnnotationParser()));
+        $parser = new Types($this->className, $this->properties, (new Minime()));
 
         $parser->parse();
         $generator = (new FakerGenerator($parser->getParserModel(), (new $this->className())));
